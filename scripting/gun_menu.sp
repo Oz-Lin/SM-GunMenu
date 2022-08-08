@@ -186,7 +186,7 @@ public void OnPluginStart()
 
     for(int i = 1; i <= MaxClients; i++)
     {
-        if(AreClientCookiesCached(i))
+        if(!AreClientCookiesCached(i))
         {
             OnClientCookiesCached(i);
         }
