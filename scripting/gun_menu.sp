@@ -688,7 +688,7 @@ public Action CS_OnBuyCommand(int client, const char[] weapon)
 public void OnRoundStart(Event event, const char[] name, bool dontBroadcast)
 {
     g_bZombieSpawned = false;
-
+    
     if (g_Cvar_MenuOnSpawn.BoolValue)
     {
         for (int client = 1; client <= MaxClients; client++)
@@ -737,6 +737,7 @@ public Action DelayApplyTimer(Handle timer, any client)
 public Action Command_Restrict(int client, int args)
 {
     SetGlobalTransTarget(client);
+
     if(args < 1)
     {
         RestrictMenu(client);
@@ -755,6 +756,8 @@ public Action Command_Restrict(int client, int args)
 
         for(int i = 1; i <= MaxClients; i++)
         {
+            SetGlobalTransTarget(i);
+
             if(IsClientInGame(i))
                 CPrintToChat(i, "%t", "Weapontype_Restricted_all", sTag);
         }
@@ -790,6 +793,7 @@ public Action Command_Restrict(int client, int args)
 public Action Command_Unrestrict(int client, int args)
 {
     SetGlobalTransTarget(client);
+
     if(args < 1)
     {
         RestrictMenu(client);
@@ -851,8 +855,10 @@ public void RestrictWeapon(const char[] weapon)
 
             for(int x = 1; x <= MaxClients; x++)
             {
+                SetGlobalTransTarget(x);
+
                 if(IsClientInGame(x))
-                    CPrintToChat(x, "%T", "Weapon_Restricted", x, sTag, g_Weapon[i].data_name);
+                    CPrintToChat(x, "%t", "Weapon_Restricted", sTag, g_Weapon[i].data_name);
             }
 
             return;
@@ -870,8 +876,10 @@ public void UnrestrictWeapon(const char[] weapon)
 
             for(int x = 1; x <= MaxClients; x++)
             {
+                SetGlobalTransTarget(i);
+
                 if(IsClientInGame(x))
-                    CPrintToChat(x, "%T", "Weapon_Unrestricted", x, sTag, g_Weapon[i].data_name);
+                    CPrintToChat(x, "%t", "Weapon_Unrestricted", sTag, g_Weapon[i].data_name);
             }
 
             return;
@@ -891,8 +899,10 @@ public void RestrictTypeWeapon(const char[] weapontype)
 
     for(int i = 1; i <= MaxClients; i++)
     {
+        SetGlobalTransTarget(i);
+
         if(IsClientInGame(i))
-            CPrintToChat(i, "%T", "Weapontype_Restricted", i, sTag, weapontype);
+            CPrintToChat(i, "%t", "Weapontype_Restricted", sTag, weapontype);
     }
 }
 
@@ -908,8 +918,10 @@ public void UnrestrictTypeWeapon(const char[] weapontype)
 
     for(int i = 1; i <= MaxClients; i++)
     {
+        SetGlobalTransTarget(i);
+
         if(IsClientInGame(i))
-            CPrintToChat(i, "%T", "Weapontype_Unrestricted", i, sTag, weapontype);
+            CPrintToChat(i, "%t", "Weapontype_Unrestricted", sTag, weapontype);
     }
 }
 
@@ -925,16 +937,20 @@ public void Toggle_RestrictWeapon(const char[] weapon)
             {
                 for(int x = 1; x <= MaxClients; x++)
                 {
+                    SetGlobalTransTarget(x);
+
                     if(IsClientInGame(x))
-                        CPrintToChat(x, "%T", "Weapon_Restricted", x, sTag, g_Weapon[i].data_name);
+                        CPrintToChat(x, "%t", "Weapon_Restricted", sTag, g_Weapon[i].data_name);
                 }
             }
             else
             {
                 for(int x = 1; x <= MaxClients; x++)
                 {
+                    SetGlobalTransTarget(x);
+
                     if(IsClientInGame(x))
-                        CPrintToChat(x, "%T", "Weapon_Unrestricted", x, sTag, g_Weapon[i].data_name);
+                        CPrintToChat(x, "%t", "Weapon_Unrestricted", sTag, g_Weapon[i].data_name);
                 }
             }
             return;
@@ -968,6 +984,8 @@ public Action GetSlotCommand(int client, int args)
 
 public Action Command_GunMenu(int client, int args)
 {
+    SetGlobalTransTarget(client);
+
     if(args == 0)
     {
         GunMenu(client);
@@ -1066,15 +1084,19 @@ public Action Command_GunMenu(int client, int args)
         }
     }
 
-    ReplyToCommand(client, " \x04%s\x01 Could not find any weapon name \"%s\".", sTag, command);
+    CReplyToCommand(client, "%t", "Invalid_WeaponName", sTag, command);
     GunMenu(client);
     return Plugin_Stop;
 }
 
 public void GunMenu(int client)
 {
+    SetGlobalTransTarget(client);
+    
     Menu menu = new Menu(MainMenuHandler, MENU_ACTIONS_ALL);
-    menu.SetTitle("%s Main Menu", sTag);
+    char Title[256];
+    Format(Title, sizeof(Title), "%t", "Title_Main");
+    menu.SetTitle("%s %s", sTag, Title);
     menu.AddItem("buy", "Buy Weapon");
     menu.AddItem("loadout", "Your Loadout");
     menu.AddItem("SPACE", "---------------", ITEMDRAW_DISABLED);
@@ -1085,6 +1107,8 @@ public void GunMenu(int client)
 
 public int MainMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 {
+    SetGlobalTransTarget(param1);
+
     switch(action)
     {
         case MenuAction_DrawItem:
@@ -1119,20 +1143,25 @@ public int MainMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 
             if(StrEqual(info, "settings"))
             {
-                if(!IsClientAdmin(param1))
+                if(IsClientAdmin(param1))
                 {
-                    Format(display, sizeof(display), "%s (Admin Only)", info);
+                    Format(display, sizeof(display), "%t", "Menu_setting", param1);
+                    return RedrawMenuItem(display);
+                }
+                else
+                {
+                    Format(display, sizeof(display), "%t (%t)", "Menu_setting", "Menu_admin", param1);
                     return RedrawMenuItem(display);
                 }
             }
             else if(StrEqual(info, "buy"))
             {
-                Format(display, sizeof(display), "%T", "Menu_buy", param1);
+                Format(display, sizeof(display), "%t", "Menu_buy", param1);
                 return RedrawMenuItem(display);
             }
             else if(StrEqual(info, "loadout"))
             {
-                Format(display, sizeof(display), "%T", "Menu_loadout", param1);
+                Format(display, sizeof(display), "%t", "Menu_loadout", param1);
                 return RedrawMenuItem(display);
             }
         }
@@ -1164,13 +1193,17 @@ public int MainMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 
 public void WeaponTypeMenu(int client)
 {
+    SetGlobalTransTarget(client);
+
     Menu menu = new Menu(WeaponTypeMenuHandler, MENU_ACTIONS_ALL);
-    menu.SetTitle("%s Weapon Type Menu", sTag);
+    char Title[256];
+    Format(Title, sizeof(Title), "%t", "Title_WeaponType");
+    menu.SetTitle("%s %s", sTag, Title);
     menu.AddItem("primary", "Primary Weapon");
     menu.AddItem("secondary", "Secondary Weapon");
     menu.AddItem("grenade", "Grenade");
-    menu.AddItem("throwable", "Throwable");
-    menu.AddItem("fire", "Fire Grenade");
+    //menu.AddItem("throwable", "Throwable");
+    //menu.AddItem("fire", "Fire Grenade");
     menu.ExitBackButton = true;
     menu.ExitButton = true;
     menu.Display(client, MENU_TIME_FOREVER);
@@ -1178,6 +1211,8 @@ public void WeaponTypeMenu(int client)
 
 public int WeaponTypeMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 {
+    SetGlobalTransTarget(param1);
+
     switch(action)
     {
         case MenuAction_DisplayItem:
@@ -1236,6 +1271,7 @@ public int WeaponTypeMenuHandler(Menu menu, MenuAction action, int param1, int p
 public void PrimaryMenu(int client)
 {
     SetGlobalTransTarget(client);
+
     Menu menu = new Menu(SelectMenuHandler, MENU_ACTIONS_ALL);
     char Title[256];
     Format(Title, sizeof(Title), "%t", "Menu_primary");
@@ -1300,6 +1336,8 @@ public void GrenadeMenu(int client)
 
 public int SelectMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 {
+    SetGlobalTransTarget(param1);
+
     switch(action)
     {
         case MenuAction_DrawItem:
@@ -1469,14 +1507,6 @@ void PurchaseWeapon(int client, const char[] entity, bool loadout, bool free = f
         if(totalprice > cash)
         {
             if(zombiereloaded && g_bZombieSpawned)
-            {
-                if(!IsClientByPassPrice(client, index))
-                {   
-                    CPrintToChat(client, "%t", "nomoney", sTag);
-                    return;
-                }
-            }
-            else
             {
                 if(!IsClientByPassPrice(client, index))
                 {   
@@ -1689,14 +1719,16 @@ void PurchaseWeapon(int client, const char[] entity, bool loadout, bool free = f
 
 public void ClientLoadoutMenu(int client)
 {
+    SetGlobalTransTarget(client);
+    
     Menu menu = new Menu(ClientLoadoutMenuHandler, MENU_ACTIONS_ALL);
     char Title[256];
-    Format(Title, sizeof(Title), "%t", "Menu_primary");
+    Format(Title, sizeof(Title), "%t", "Title_Loadout");
     menu.SetTitle("%s %s", sTag, Title);
     menu.AddItem("save", "Save Current Loadout");
     menu.AddItem("edit", "Edit Your Loadout");
     menu.AddItem("buy", "Buy Saved Loadout");
-    menu.AddItem("Auto-Rebuy", "Auto-Rebuy");
+    menu.AddItem("auto", "Auto-Rebuy");
 
     menu.ExitBackButton = true;
     menu.ExitButton = true;
@@ -1705,6 +1737,8 @@ public void ClientLoadoutMenu(int client)
 
 public int ClientLoadoutMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 {
+    SetGlobalTransTarget(param1);
+
     switch(action)
     {
         case MenuAction_DisplayItem:
@@ -1712,22 +1746,22 @@ public int ClientLoadoutMenuHandler(Menu menu, MenuAction action, int param1, in
             char info[64];
             char display[64];
             menu.GetItem(param2, info, sizeof(info));
-            if(StrEqual(info, "Auto-Rebuy", false))
+            if(StrEqual(info, "auto", false))
             {
                 if(!g_bAutoRebuy[param1])
                 {
-                    Format(display, sizeof(display), "%t: %t", "Menu_rebuy_l", "Menu_disable", param1);
+                    Format(display, sizeof(display), "%t: %t", "Menu_rebuy_l", "Menu_disabled", param1);
                     return RedrawMenuItem(display);
                 }
                 else
                 {
-                    Format(display, sizeof(display), "%t: %t", "Menu_rebuy_l", "Menu_enable", param1);
+                    Format(display, sizeof(display), "%t: %t", "Menu_rebuy_l", "Menu_enabled", param1);
                     return RedrawMenuItem(display);
                 }
             }
-            else if(StrEqual(info, "save"))
+            else if(StrEqual(info, "buy"))
             {
-                Format(display, sizeof(display), "%t", "Menu_save_l", param1);
+                Format(display, sizeof(display), "%t", "Menu_buy_l", param1);
                 return RedrawMenuItem(display);
             }
             else if(StrEqual(info, "edit"))
@@ -1735,9 +1769,9 @@ public int ClientLoadoutMenuHandler(Menu menu, MenuAction action, int param1, in
                 Format(display, sizeof(display), "%t", "Menu_edit_l", param1);
                 return RedrawMenuItem(display);
             }
-            else if(StrEqual(info, "buy"))
+            else if(StrEqual(info, "save"))
             {
-                Format(display, sizeof(display), "%t", "Menu_buy_l", param1);
+                Format(display, sizeof(display), "%t", "Menu_save_l", param1);
                 return RedrawMenuItem(display);
             }
         }
@@ -1745,23 +1779,74 @@ public int ClientLoadoutMenuHandler(Menu menu, MenuAction action, int param1, in
         {
             char info[64];
             menu.GetItem(param2, info, sizeof(info));
+
             if(StrEqual(info, "save", false))
             {
-                for(int i = 0; i < WEAPON_SLOT_MAX; i++)
+                if(!IsPlayerAlive(param1))
                 {
-                    SaveCurrentLoadout(param1, i);
+                    CPrintToChat(param1, "%t", "save_loadout_dead", sTag);
+                    ClientLoadoutMenu(param1);
                 }
-                ClientLoadoutMenu(param1);
+                else if(zombieriot && ZRiot_IsClientZombie(param1))
+                {
+                    CPrintToChat(param1, "%t", "save_loadout_zombie", sTag);
+                    ClientLoadoutMenu(param1);
+                }
+                else if(zombiereloaded && ZR_IsClientZombie(param1))
+                {
+                    CPrintToChat(param1, "%t", "save_loadout_zombie", sTag);
+                    ClientLoadoutMenu(param1);
+                }
+                else
+                {
+                    CPrintToChat(param1, "%t", "save_loadout", sTag);
+                    for(int i = 0; i < WEAPON_SLOT_MAX; i++)
+                    {
+                        SaveCurrentLoadout(param1, i);
+                    }
+                    ClientLoadoutMenu(param1);
+                }
             }
-            else if(StrEqual(info, "buy", false))
+            else if(StrEqual(info, "buy", true))
             {
-                BuySavedLoadout(param1, false);
+                if(!IsPlayerAlive(param1))
+                {
+                    CPrintToChat(param1, "%t", "buy_loadout_dead", sTag);
+                    ClientLoadoutMenu(param1);
+                }
+                else if(zombieriot && ZRiot_IsClientZombie(param1))
+                {
+                    CPrintToChat(param1, "%t", "buy_loadout_zombie", sTag);
+                    ClientLoadoutMenu(param1);
+                }
+                else if(zombiereloaded && ZR_IsClientZombie(param1))
+                {
+                    CPrintToChat(param1, "%t", "buy_loadout_zombie", sTag);
+                    ClientLoadoutMenu(param1);
+                }
+                else if(g_bBuyZoneOnly && !IsClientInBuyZone(param1))
+                {
+                    CPrintToChat(param1, "%t", "buy_loadout_buyzone", sTag);
+                    ClientLoadoutMenu(param1);
+                }
+                else
+                {
+                    if(BuySavedLoadout(param1, false))
+                    {
+                        CPrintToChat(param1, "%t", "buy_loadout", sTag);
+                        
+                    }
+                    else
+                    {
+                        return param1;
+                    }
+                }
             }
             else if(StrEqual(info, "edit", false))
             {
                 EditLoadout(param1);
             }
-            else if(StrEqual(info, "Auto-Rebuy", false))
+            else if(StrEqual(info, "auto", false))
             {
                 g_bAutoRebuy[param1] = !g_bAutoRebuy[param1];
                 SaveRebuyCookie(param1);
@@ -1791,6 +1876,8 @@ public int ClientLoadoutMenuHandler(Menu menu, MenuAction action, int param1, in
 
 void SaveCurrentLoadout(int client, int slot)
 {
+    SetGlobalTransTarget(client);
+
     if(slot == SLOT_KNIFE || slot == SLOT_KEVLAR)
     {
         return;
@@ -1820,6 +1907,8 @@ void SaveCurrentLoadout(int client, int slot)
 
 void BuySavedLoadout(int client, bool spawn)
 {
+    SetGlobalTransTarget(client);
+
     for(int i = 0; i < WEAPON_SLOT_MAX; i++)
     {
         char weaponentity[64];
@@ -1828,7 +1917,7 @@ void BuySavedLoadout(int client, bool spawn)
         if(weapon != -1)
         {
             GetEntityClassname(weapon, weaponentity, sizeof(weaponentity));
-            //PrintToChat(client, " \x04[Debug]\x01 Found %s", weaponentity);
+            //CPrintToChat(i, " \x04[Debug]\x01 Found %s", weaponentity);
         }
 
         char weaponname[64];
@@ -1865,7 +1954,7 @@ void EditLoadout(int client)
 
     Menu menu = new Menu(EditLoadoutHandler, MENU_ACTIONS_ALL);
     char Title[256];
-    Format(Title, sizeof(Title), "%t", "Menu_edit_l");
+    Format(Title, sizeof(Title), "%t", "Title_LoadoutOption");
     menu.SetTitle("%s %s", sTag, Title);
     menu.AddItem("Primary", "Primary");
     menu.AddItem("Secondary", "Secondary");
@@ -1894,13 +1983,13 @@ public int EditLoadoutHandler(Menu menu, MenuAction action, int param1, int para
                 GetClientCookie(param1, g_hWeaponCookies[SLOT_PRIMARY], weaponname, sizeof(weaponname));
                 if(weaponname[0] == '\0')
                 {
-                    Format(display, sizeof(display), "%t: None", "Menu_primary", param1);
-                    RedrawMenuItem(display);
+                    Format(display, sizeof(display), "%t: %t", "Menu_primary", "Menu_none", param1);
+                    return RedrawMenuItem(display);
                 }
                 else
                 {
                     Format(display, sizeof(display), "%t: %s", "Menu_primary", weaponname, param1);
-                    RedrawMenuItem(display);
+                    return RedrawMenuItem(display);
                 }
             }
             else if(StrEqual(info, "Secondary", false))
@@ -1908,13 +1997,13 @@ public int EditLoadoutHandler(Menu menu, MenuAction action, int param1, int para
                 GetClientCookie(param1, g_hWeaponCookies[SLOT_SECONDARY], weaponname, sizeof(weaponname));
                 if(weaponname[0] == '\0')
                 {
-                    Format(display, sizeof(display), "%t: None", "Menu_secondary", param1);
-                    RedrawMenuItem(display);
+                    Format(display, sizeof(display), "%t: %t", "Menu_secondary", "Menu_none", param1);
+                    return RedrawMenuItem(display);
                 }
                 else
                 {
                     Format(display, sizeof(display), "%t: %s", "Menu_secondary", weaponname, param1);
-                    RedrawMenuItem(display);
+                    return RedrawMenuItem(display);
                 }
             }
             if(StrEqual(info, "Grenade", false))
@@ -1922,13 +2011,13 @@ public int EditLoadoutHandler(Menu menu, MenuAction action, int param1, int para
                 GetClientCookie(param1, g_hWeaponCookies[SLOT_GRENADE], weaponname, sizeof(weaponname));
                 if(weaponname[0] == '\0')
                 {
-                    Format(display, sizeof(display), "%t: None", "Menu_grenade", param1);
-                    RedrawMenuItem(display);
+                    Format(display, sizeof(display), "%t: %t", "Menu_grenade", "Menu_none", param1);
+                    return RedrawMenuItem(display);
                 }
                 else
                 {
                     Format(display, sizeof(display), "%t: %s", "Menu_grenade", weaponname, param1);
-                    RedrawMenuItem(display);
+                    return RedrawMenuItem(display);
                 }
             }
         }
@@ -1967,27 +2056,32 @@ int currentslot;
 public void ChooseLoadout(int client, int slot)
 {
     SetGlobalTransTarget(client);
-
     char weapontype[64];
 
     if(slot == SLOT_PRIMARY)
     {
-        Format(weapontype, sizeof(weapontype), "%t", "Menu_primary");
+        Format(weapontype, sizeof(weapontype), "%t", "Menu_primary", client);
     }
     else if(slot == SLOT_SECONDARY)
     {
-        Format(weapontype, sizeof(weapontype), "%t", "Menu_secondary");
+        Format(weapontype, sizeof(weapontype), "%t", "Menu_secondary", client);
     }
     else if(slot == SLOT_GRENADE)
     {
-        Format(weapontype, sizeof(weapontype), "%t", "Menu_grenade");
+        Format(weapontype, sizeof(weapontype), "%t", "Menu_grenade", client);
     }
 
     currentslot = slot;
 
     Menu menu = new Menu(ChooseLoadoutHandler, MENU_ACTIONS_ALL);
-    menu.SetTitle("%s Edit %s Loadout", sTag, weapontype);
-    menu.AddItem("none", "None");
+
+    char Title[256];
+    Format(Title, sizeof(Title), "%t", "Title_LoadoutEdit", sTag, weapontype, client);
+    menu.SetTitle(Title);
+
+    char None[64];
+    Format(None, sizeof(None), "%t", "Menu_none", client);
+    menu.AddItem("none", None);
 
     for(int i = 0; i < g_iTotal; i++)
     {
@@ -2007,7 +2101,7 @@ public void ChooseLoadout(int client, int slot)
 public int ChooseLoadoutHandler(Menu menu, MenuAction action, int param1, int param2)
 {
     SetGlobalTransTarget(param1);
-    
+
     switch(action)
     {
         case MenuAction_DrawItem:
@@ -2042,7 +2136,7 @@ public int ChooseLoadoutHandler(Menu menu, MenuAction action, int param1, int pa
             {
                 if(cookie[0] == '\0')
                 {
-                    Format(display, sizeof(display), "%t %t", "None", "Selected");
+                    Format(display, sizeof(display), "%t (%t)", "Menu_none", "Menu_select", param1);
                     return RedrawMenuItem(display);
                 }
             }
@@ -2050,7 +2144,8 @@ public int ChooseLoadoutHandler(Menu menu, MenuAction action, int param1, int pa
             {
                 if(StrEqual(cookie, info, false))
                 {
-                    Format(display, sizeof(display), "%s %t", info, "Selected");
+                    Format(display, sizeof(display), "%t", "Menu_none", param1);
+                    Format(display, sizeof(display), "%s (%t)", info, "Menu_select", param1);
                     return RedrawMenuItem(display);
                 }
             }
@@ -2085,11 +2180,17 @@ public int ChooseLoadoutHandler(Menu menu, MenuAction action, int param1, int pa
 
 public void ServerSettingMenu(int client)
 {
+    SetGlobalTransTarget(client);
+
     Menu menu = new Menu(ServerSettingMenuHandler, MENU_ACTIONS_ALL);
-    menu.SetTitle("%s Setting Menu", sTag);
-    menu.AddItem("BuyZone Only", "BuyZone Only");
+
+    char Title[256];
+    Format(Title, sizeof(Title), "%t", "Title_Setting");
+    menu.SetTitle("%s %s", sTag, Title);
+
+    menu.AddItem("buyzone", "BuyZone Only");
     menu.AddItem("restrict", "Restrict Weapon");
-    menu.AddItem("Allow Loadout", "Allow Loadout");
+    menu.AddItem("loadout", "Allow Loadout");
 
     menu.ExitBackButton = true;
     menu.ExitButton = true;
@@ -2098,6 +2199,7 @@ public void ServerSettingMenu(int client)
 
 public int ServerSettingMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 {
+    SetGlobalTransTarget(param1);
     switch(action)
     {
         case MenuAction_DisplayItem:
@@ -2106,31 +2208,36 @@ public int ServerSettingMenuHandler(Menu menu, MenuAction action, int param1, in
             char display[64];
             menu.GetItem(param2, info, sizeof(info));
 
-            if(StrEqual(info, "Allow Loadout"))
+            if(StrEqual(info, "loadout"))
             {
                 if(g_bAllowLoadout)
                 {
-                    Format(display, sizeof(display), "%s: Yes", info);
+                    Format(display, sizeof(display), "%t: %t", "Menu_loadout", "Menu_enabled", param1);
                     return RedrawMenuItem(display);
                 }
                 else
                 {
-                    Format(display, sizeof(display), "%s: No", info);
+                    Format(display, sizeof(display), "%t: %t", "Menu_loadout", "Menu_disabled", param1);
                     return RedrawMenuItem(display);
                 }
             }
-            else if(StrEqual(info, "BuyZone Only"))
+            else if(StrEqual(info, "buyzone"))
             {
                 if(!g_bBuyZoneOnly)
                 {
-                    Format(display, sizeof(display), "%s: No", info);
+                    Format(display, sizeof(display), "%t: %t", "Menu_buyzone_s", "Menu_disabled", param1);
                     return RedrawMenuItem(display);
                 }
                 else
                 {
-                    Format(display, sizeof(display), "%s: Yes", info);
+                    Format(display, sizeof(display), "%t: %t", "Menu_buyzone_s", "Menu_enabled", param1);
                     return RedrawMenuItem(display);
                 }
+            }
+            else if(StrEqual(info, "restrict"))
+            {
+                Format(display, sizeof(display), "%t", "Menu_restrict_s", param1);
+                return RedrawMenuItem(display);
             }
         }
         case MenuAction_Select:
@@ -2138,29 +2245,29 @@ public int ServerSettingMenuHandler(Menu menu, MenuAction action, int param1, in
             char info[64];
             menu.GetItem(param2, info, sizeof(info));
 
-            if(StrEqual(info, "BuyZone Only"))
+            if(StrEqual(info, "buyzone"))
             {
                 g_bBuyZoneOnly = !g_bBuyZoneOnly;
                 if(g_bBuyZoneOnly == true)
                 {
-                    PrintToChatAll(" \x04%s\x01 Purchase weapon in Buyzone-only has been \x07enabled\x01.", sTag);
+                    CPrintToChatAll("%t", "buyzone_on", sTag, param1);
                 }
                 else
                 {
-                    PrintToChatAll(" \x04%s\x01 Purchase weapon in Buyzone-only has been \x06disabled\x01.", sTag);
+                    CPrintToChatAll("%t", "buyzone_off", sTag, param1);
                 }
                 ServerSettingMenu(param1);
             }
-            else if(StrEqual(info, "Allow Loadout"))
+            else if(StrEqual(info, "loadout"))
             {
                 g_bAllowLoadout = !g_bAllowLoadout;
                 if(g_bAllowLoadout == true)
                 {
-                    PrintToChatAll(" \x04%s\x01 Weapon Loadout has been \x07enabled\x01.", sTag);
+                    CPrintToChatAll("%t", "loadout_on", sTag, param1);
                 }
                 else
                 {
-                    PrintToChatAll(" \x04%s\x01 Weapon Loadout has been \x06disabled\x01.", sTag);
+                    CPrintToChatAll("%t", "loadout_off", sTag, param1);
                 }
                 ServerSettingMenu(param1);
 
@@ -2184,8 +2291,14 @@ public int ServerSettingMenuHandler(Menu menu, MenuAction action, int param1, in
 
 public void RestrictMenu(int client)
 {
+    SetGlobalTransTarget(client);
+
     Menu menu = new Menu(RestrictTypeMenuHandler, MENU_ACTIONS_ALL);
-    menu.SetTitle("%s Restrict Weapon Menu", sTag);
+
+    char Title[256];
+    Format(Title, sizeof(Title), "%t", "Title_Restrict");
+    menu.SetTitle("%s %s", sTag, Title);
+
     menu.AddItem("primary", "Primary Weapon");
     menu.AddItem("secondary", "Secondary Weapon");
     menu.AddItem("grenade", "Grenade");
@@ -2196,8 +2309,31 @@ public void RestrictMenu(int client)
 
 public int RestrictTypeMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 {
+    SetGlobalTransTarget(param1);
     switch(action)
     {
+        case MenuAction_DisplayItem:
+        {
+            char info[64];
+            char display[64];
+            menu.GetItem(param2, info, sizeof(info));
+
+            if(StrEqual(info, "primary"))
+            {
+                Format(display, sizeof(display), "%t", "Menu_primary_r", param1);
+                return RedrawMenuItem(display);
+            }
+            else if(StrEqual(info, "secondary"))
+            {
+                Format(display, sizeof(display), "%t", "Menu_secondary_r", param1);
+                return RedrawMenuItem(display);
+            }
+            else if(StrEqual(info, "grenade"))
+            {
+                Format(display, sizeof(display), "%t", "Menu_grenade_r", param1);
+                return RedrawMenuItem(display);
+            }
+        }
         case MenuAction_Select:
         {
             char info[64];
@@ -2231,8 +2367,14 @@ public int RestrictTypeMenuHandler(Menu menu, MenuAction action, int param1, int
 
 public void RestrictPrimaryMenu(int client)
 {
+    SetGlobalTransTarget(client);
+
     Menu menu = new Menu(SelectRestrictMenuHandler, MENU_ACTIONS_ALL);
-    menu.SetTitle("%s Primary Weapons", sTag);
+
+    char Title[256];
+    Format(Title, sizeof(Title), "%t", "Title_Primary_r");
+    menu.SetTitle("%s %s", sTag, Title);
+
     for (int i = 0; i < g_iTotal; i++)
     {
         if(g_Weapon[i].data_slot == SLOT_PRIMARY)
@@ -2249,8 +2391,14 @@ public void RestrictPrimaryMenu(int client)
 
 public void RestrictSecondaryMenu(int client)
 {
+    SetGlobalTransTarget(client);
+    
     Menu menu = new Menu(SelectRestrictMenuHandler, MENU_ACTIONS_ALL);
-    menu.SetTitle("%s Secondary Weapons", sTag);
+
+    char Title[256];
+    Format(Title, sizeof(Title), "%t", "Title_Secondary_r");
+    menu.SetTitle("%s %s", sTag, Title);
+
     for (int i = 0; i < g_iTotal; i++)
     {
         if(g_Weapon[i].data_slot == SLOT_SECONDARY)
@@ -2267,8 +2415,13 @@ public void RestrictSecondaryMenu(int client)
 
 public void RestrictGrenadeMenu(int client)
 {
+    SetGlobalTransTarget(client);
+
     Menu menu = new Menu(SelectRestrictMenuHandler, MENU_ACTIONS_ALL);
-    menu.SetTitle("%s Grenade", sTag);
+    char Title[256];
+    Format(Title, sizeof(Title), "%t", "Title_Grenade_r");
+    menu.SetTitle("%s %s", sTag, Title);
+
     for (int i = 0; i < g_iTotal; i++)
     {
         if(g_Weapon[i].data_slot == SLOT_GRENADE)
@@ -2285,11 +2438,14 @@ public void RestrictGrenadeMenu(int client)
 
 public int SelectRestrictMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 {
+    SetGlobalTransTarget(param1);
+
     switch(action)
     {
         case MenuAction_DisplayItem:
         {
             char info[64];
+            char display[64];
             menu.GetItem(param2, info, sizeof(info));
 
             for (int i = 0; i < g_iTotal; i++)
@@ -2298,9 +2454,8 @@ public int SelectRestrictMenuHandler(Menu menu, MenuAction action, int param1, i
                 {
                     if(g_Weapon[i].data_restrict == true)
                     {
-                        char display[64];
-                        Format(display, sizeof(display), "%s - Restricted", info);
-                        RedrawMenuItem(display);
+                        Format(display, sizeof(display), "%s - %t", info, "Menu_restrict", param1);
+                        return RedrawMenuItem(display);
                     }
                 }
             }
