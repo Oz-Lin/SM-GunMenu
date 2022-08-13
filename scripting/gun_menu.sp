@@ -1437,6 +1437,8 @@ void PurchaseWeapon(int client, const char[] entity, bool loadout, bool free = f
             }
         }
 
+        g_bFreeBeforeInfection = GetConVarBool(g_Cvar_FreeBeforeInfection);
+
         if(g_bFreeBeforeInfection && !g_bZombieSpawned)
             free = true;
 
