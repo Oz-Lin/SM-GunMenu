@@ -726,7 +726,6 @@ public Action DelayApplyTimer(Handle timer, any client)
     if(g_bAutoRebuy[client])
         BuySavedLoadout(client, true);
 
-    int grenade = GetPlayerWeaponSlot(client, SLOT_GRENADE);
     int kevlar = GetEntProp(client, Prop_Send, "m_ArmorValue");
 
     if(kevlar < 100 && g_bFreeKevlar)
@@ -735,7 +734,7 @@ public Action DelayApplyTimer(Handle timer, any client)
         SetEntProp(client, Prop_Send, "m_bHasHelmet", 1);
     }
 
-    if(grenade == -1 && g_bFreeHe)
+    if(!HasWeapon(client, "weapon_hegrenade") && g_bFreeHe)
     {
         GivePlayerItem(client, "weapon_hegrenade");
     }
@@ -1526,6 +1525,23 @@ void PurchaseWeapon(int client, const char[] entity, bool loadout, bool free = f
                     CPrintToChat(client, "%t", "nomoney", sTag);
                     return;
                 }
+            }
+            else
+            {
+                if(!IsClientByPassPrice(client, index))
+                {   
+                    CPrintToChat(client, "%t", "nomoney", sTag);
+                    return;
+                }
+            }
+        }
+
+        if(g_Weapon[index].data_slot == SLOT_GRENADE)
+        {
+            if(HasWeapon(client, g_Weapon[index].data_entity))
+            {
+                CPrintToChat(client, "%t", "buy_have", sTag);
+                return;
             }
         }
 
@@ -2573,6 +2589,31 @@ int GetWeaponPurchaseMax(const char[] weaponname)
         }
     }
     return maxpurchase;
+}
+
+stock bool HasWeapon(int client, const char[] weapon)
+{
+    int length = GetEntPropArraySize(client, Prop_Send, "m_hMyWeapons"); 
+    
+    for (int i= 0; i < length; i++)
+    {
+        int item = GetEntPropEnt(client, Prop_Send, "m_hMyWeapons", i); 
+        
+        if (item != -1)
+        {
+            char classname[64];
+            
+            if (GetEntityClassname(item, classname, sizeof(classname)))
+            {
+                if (StrEqual(weapon, classname, false))
+                {
+                    return true;
+                }
+            }
+        }
+    }
+    
+    return false;
 }
 
 Action ForwardOnClientPurchase(int client, const char[] weaponentity, bool loadout, bool free)
