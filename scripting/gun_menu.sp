@@ -116,7 +116,7 @@ GlobalForward g_hOnClientPurchase;
 public Plugin myinfo = 
 {
     name = "[CSGO/CSS] Gun Menu",
-    author = "Oylsister, Azel, Sparky",
+    author = "Oylsister, Azel, Sparky, koen",
     description = "Purchase weapon from the menu and create specific command to purchase specific weapon",
     version = "3.2",
     url = "https://github.com/oylsister/SM-GunMenu"
