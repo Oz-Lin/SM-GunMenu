@@ -52,6 +52,7 @@ bool g_bAllowLoadout = true;
 bool g_bCommandInitialized = false;
 bool g_bMenuCommandInitialized = false;
 bool g_bSaveOnMenuCommand;
+bool g_bFreeBeforeInfection;
 
 char sTag[64];
 
@@ -65,6 +66,7 @@ ConVar g_Cvar_CooldownMode;
 ConVar g_Cvar_GlobalCooldown;
 ConVar g_Cvar_FreeOnSpawn;
 ConVar g_Cvar_MenuOnSpawn;
+ConVar g_Cvar_FreeBeforeInfection;
 
 // Default Weapon
 ConVar g_Cvar_Def_Primary;
@@ -133,6 +135,7 @@ public void OnPluginStart()
     g_Cvar_GlobalCooldown = CreateConVar("sm_gunmenu_global_cooldown", "5.0", "Length of Global Cooldown in seconds", _, true, 0.0, false);
     g_Cvar_FreeOnSpawn = CreateConVar("sm_gunmenu_free_onspawn", "1.0", "Free purchase on spawn", _, true, 0.0, true, 1.0);
     g_Cvar_MenuOnSpawn = CreateConVar("sm_gunmenu_menu_onspawn", "1.0", "Display gun menu to players on spawn", _, true, 0.0, true, 1.0);
+    g_Cvar_FreeBeforeInfection = CreateConVar("sm_gunmenu_free_beforeinfection", "1.0", "Free rebuy before First Infection (Zombie:Reloaded)", _,true, 0.0, true, 1.0);
 
     g_Cvar_Def_Primary = CreateConVar("sm_gunmenu_default_primary", "P90", "Default Primary weapon");
     g_Cvar_Def_Secondary = CreateConVar("sm_gunmenu_default_secondary", "Elite", "Default Secondary weapon");
@@ -159,6 +162,7 @@ public void OnPluginStart()
     HookConVarChange(g_Cvar_CooldownMode, OnCooldownModeChanged);
     HookConVarChange(g_Cvar_GlobalCooldown, OnGlobalCooldownChanged);
     HookConVarChange(g_Cvar_FreeOnSpawn, OnFreeOnSpawnChanged);
+    HookConVarChange(g_Cvar_FreeBeforeInfection, OnFreeBeforeInfection);
 
     HookConVarChange(g_Cvar_Def_Primary, OnDefaultChanged);
     HookConVarChange(g_Cvar_Def_Secondary, OnDefaultChanged);
@@ -338,6 +342,10 @@ public void OnGlobalCooldownChanged(ConVar cvar, const char[] oldValue, const ch
 public void OnFreeOnSpawnChanged(ConVar cvar, const char[] oldValue, const char[] newValue)
 {
     g_bFreeOnSpawn = GetConVarBool(g_Cvar_FreeOnSpawn);
+}
+public void OnFreeBeforeInfection(ConVar cvar, const char[] oldValue, const char[] newValue)
+{
+    g_bFreeBeforeInfection = GetConVarBool(g_Cvar_FreeBeforeInfection);
 }
 
 public void OnDefaultChanged(ConVar cvar, const char[] oldValue, const char[] newValue)
@@ -1428,6 +1436,11 @@ void PurchaseWeapon(int client, const char[] entity, bool loadout, bool free = f
                 return;
             }
         }
+
+        g_bFreeBeforeInfection = GetConVarBool(g_Cvar_FreeBeforeInfection);
+
+        if(g_bFreeBeforeInfection && !g_bZombieSpawned)
+            free = true;
 
         float cooldown;
 
