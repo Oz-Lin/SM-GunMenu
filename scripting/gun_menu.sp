@@ -13,10 +13,6 @@
 #include <zombiereloaded>
 #include <smrpg_armorplus>
 
-bool zombiereloaded;
-bool zombieriot;
-bool smrpg_armor;
-
 #pragma newdecls required
 
 #define SLOT_PRIMARY 0
@@ -212,49 +208,6 @@ public APLRes AskPluginLoad2(Handle myself, bool late, char[] error, int err_max
     MarkNativeAsOptional("SMRPG_Armor_GetClientMaxArmor");
 
     return APLRes_Success;
-}
-
-public void OnAllPluginsLoaded()
-{
-    zombiereloaded = LibraryExists("zombiereloaded");
-    zombieriot = LibraryExists("zombieriot");
-    smrpg_armor = LibraryExists("smrpg_armorplus");
-}
- 
-public void OnLibraryRemoved(const char[] name)
-{
-    if (StrEqual(name, "zombiereloaded"))
-    {
-        zombiereloaded = false;
-    }
-
-    if (StrEqual(name, "zombieriot"))
-    {
-        zombieriot = false;
-    }
-
-    if (StrEqual(name, "zombiereloaded"))
-    {
-        zombiereloaded = false;
-    }
-}
- 
-public void OnLibraryAdded(const char[] name)
-{
-    if (StrEqual(name, "zombiereloaded"))
-    {
-        zombiereloaded = true;
-    }
-
-    if (StrEqual(name, "zombieriot"))
-    {
-        zombieriot = true;
-    }
-
-    if (StrEqual(name, "smrpg_armorplus"))
-    {
-        smrpg_armor = true;
-    }
 }
 
 void ResetClientData(int client)
@@ -720,7 +673,10 @@ public Action DelayApplyTimer(Handle timer, any client)
     if(!IsClientInGame(client) || !IsPlayerAlive(client))
         return Plugin_Handled;
 
-    if(zombiereloaded && ZR_IsClientZombie(client))
+    if(GetFeatureStatus(FeatureType_Native, "ZR_IsClientZombie") == FeatureStatus_Available && ZR_IsClientZombie(client))
+        return Plugin_Handled;
+
+    if(GetFeatureStatus(FeatureType_Native, "ZRiot_IsClientZombie") == FeatureStatus_Available && ZRiot_IsClientZombie(client))
         return Plugin_Handled;
 
     if(g_bAutoRebuy[client])
@@ -1392,6 +1348,10 @@ void PurchaseWeapon(int client, const char[] entity, bool loadout, bool free = f
 {
     SetGlobalTransTarget(client);
 
+    bool zombieriot = GetFeatureStatus(FeatureType_Native, "ZRiot_IsClientZombie") == FeatureStatus_Available;
+    bool zombiereloaded = GetFeatureStatus(FeatureType_Native, "ZR_IsClientZombie") == FeatureStatus_Available;
+    bool smrpg_armor = GetFeatureStatus(FeatureType_Native, "SMRPG_Armor_GetClientMaxArmor") == FeatureStatus_Available;
+
     Action result = ForwardOnClientPurchase(client, entity, loadout, free);
 
     if(result == Plugin_Handled)
@@ -1431,7 +1391,9 @@ void PurchaseWeapon(int client, const char[] entity, bool loadout, bool free = f
         {
             if(!IsClientByPassRestrict(client, index))
             {
-                CPrintToChat(client, "%t", "Weapon_Restrict", sTag, g_Weapon[index].data_name);
+                if(!loadout)
+                    CPrintToChat(client, "%t", "Weapon_Restrict", sTag, g_Weapon[index].data_name);
+
                 return;
             }
         }
@@ -1767,6 +1729,9 @@ public void ClientLoadoutMenu(int client)
 public int ClientLoadoutMenuHandler(Menu menu, MenuAction action, int param1, int param2)
 {
     SetGlobalTransTarget(param1);
+
+    bool zombieriot = GetFeatureStatus(FeatureType_Native, "ZRiot_IsClientZombie") == FeatureStatus_Available;
+    bool zombiereloaded = GetFeatureStatus(FeatureType_Native, "ZR_IsClientZombie") == FeatureStatus_Available;
 
     switch(action)
     {
@@ -2158,23 +2123,36 @@ public int ChooseLoadoutHandler(Menu menu, MenuAction action, int param1, int pa
         {
             char info[64];
             char cookie[64];
-            char display[64];
+            char display[128];
             menu.GetItem(param2, info, sizeof(info));
             GetClientCookie(param1, g_hWeaponCookies[currentslot], cookie, sizeof(cookie));
+
+            int weaponindex = FindWeaponIndexByName(info);
+            
             if(StrEqual(info, "none", false))
             {
                 if(cookie[0] == '\0')
                 {
-                    Format(display, sizeof(display), "%t (%t)", "Menu_none", "Menu_select", param1);
+                    Format(display, sizeof(display), "%t (%t)", "Menu_none", "Menu_select");
                     return RedrawMenuItem(display);
                 }
             }
             else
             {
+                if(g_Weapon[weaponindex].data_restrict && !StrEqual(cookie, info, false))
+                {
+                    Format(display, sizeof(display), "%s (%t)", info, "Menu_restrict");
+                    return RedrawMenuItem(display);
+                }
+
                 if(StrEqual(cookie, info, false))
                 {
-                    Format(display, sizeof(display), "%t", "Menu_none", param1);
-                    Format(display, sizeof(display), "%s (%t)", info, "Menu_select", param1);
+                    if(!g_Weapon[weaponindex].data_restrict)
+                        Format(display, sizeof(display), "%s (%t)", info, "Menu_select");
+
+                    else
+                        Format(display, sizeof(display), "%s (%t) (%t)", info, "Menu_select", "Menu_restrict");
+
                     return RedrawMenuItem(display);
                 }
             }
@@ -2184,16 +2162,18 @@ public int ChooseLoadoutHandler(Menu menu, MenuAction action, int param1, int pa
             char info[64];
             menu.GetItem(param2, info, sizeof(info));
 
+            int weaponindex = FindWeaponIndexByName(info);
+
+            if(g_Weapon[weaponindex].data_restrict)
+                CPrintToChat(param1, "%t", "Choose_restrict_loadout", sTag, g_Weapon[weaponindex].data_name);
+
             if(StrEqual(info, "none", false))
-            {
                 SaveLoadoutCookie(param1, currentslot, "");
-                EditLoadout(param1);
-            }
+
             else
-            {
                 SaveLoadoutCookie(param1, currentslot, info);
-                EditLoadout(param1);
-            }
+
+            EditLoadout(param1);
         }
         case MenuAction_Cancel:
         {

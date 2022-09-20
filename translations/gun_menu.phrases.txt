@@ -547,6 +547,13 @@
 		"jp"		"制限された"
 		"ru"		"Запрещенное"
 	}
+
+	"Choose_restrict_loadout"
+	{
+		"#format"	"{1:s}{2:s}"
+		"en"		"{green}{1} {default}Your loadout Weapon {green}\"{2}\"{default} is currently restricted, The weapon will be available for purchasing again once it's get unlocked."
+	}
+
 	"Usage_GetSlot"
 	{
 		"#format"	"{1:s}"
