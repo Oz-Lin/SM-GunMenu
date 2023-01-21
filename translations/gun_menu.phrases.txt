@@ -13,6 +13,8 @@
 	{
 		"#format"	"{1:s}{2:s}"
 		"en"		"{green}{1} {default}Could not find any weapon name \"{2}\"."
+		"zho"		"{green}{1} {default}找不到武器名 \"{2}\"."
+		"chi"		"{green}{1} {default}找不到武器名 \"{2}\"."
 		"jp"		"{green}{1} {default}武器名 \"{2}\" が見つかりません"
 		"ru"		"{green}{1} {default}Не удалось найти оружие \"{2}\"."
 	}
@@ -21,8 +23,8 @@
 		"#format"	"{1:s}{2:s}"
 		"en"		"{green}{1} {default}Weapon {lightgreen}{2} {default}has been restricted."
 		"jp"		"{green}{1} {lightgreen}{2} {default}の購入が制限されました."
-		"zho"		"{green}{1} {default}武器 {lightgreen}{2} {default}限制使用."
-		"chi"		"{green}{1} {default}武器 {lightgreen}{2} {default}限制使用."
+		"zho"		"{green}{1} {default}武器 {lightgreen}{2} {default}被限制使用."
+		"chi"		"{green}{1} {default}武器 {lightgreen}{2} {default}被限制使用."
 		"ru"		"{green}{1} {default}Оружие {lightgreen}{2} {default}было запрещенно."
 	}
 	"Weapon_Unrestricted"
@@ -30,8 +32,8 @@
 		"#format"	"{1:s}{2:s}"
 		"en"		"{green}{1} {default}Weapon {lightgreen}{2} {default}has been unrestricted."
 		"jp"		"{green}{1} {lightgreen}{2} {default}の購入制限が解除されました."
-		"zho"		"{green}{1} {default}武器 {lightgreen}{2} {default}解除限制使用."
-		"chi"		"{green}{1} {default}武器 {lightgreen}{2} {default}解除限制使用."
+		"zho"		"{green}{1} {default}武器 {lightgreen}{2} {default}已解除使用限制."
+		"chi"		"{green}{1} {default}武器 {lightgreen}{2} {default}已解除使用限制."
 		"ru"		"{green}{1} {default}Оружие {lightgreen}{2} {default}было разрешенно."
 	}
 	"Weapontype_Restricted"
@@ -39,8 +41,8 @@
 		"#format"	"{1:s}{2:s}"
 		"en"		"{green}{1} {default}Weapon-Type {lightgreen}{2} {default}has been restricted."
 		"jp"		"{green}{1} {lightgreen}{2} {default}系統の武器は購入できなくなりました."
-		"zho"		"{green}{1} {default}武器種類 {lightgreen}{2} {default}限制使用."
-		"chi"		"{green}{1} {default}武器种类 {lightgreen}{2} {default}限制使用."
+		"zho"		"{green}{1} {default}武器種類 {lightgreen}{2} {default}被限制使用."
+		"chi"		"{green}{1} {default}武器种类 {lightgreen}{2} {default}被限制使用."
 		"ru"		"{green}{1} {default}Тип оружия {lightgreen}{2} {default}был запрещен."
 	}
 	"Weapontype_Unrestricted"
@@ -48,8 +50,8 @@
 		"#format"	"{1:s}{2:s}"
 		"en"		"{green}{1} {default}Weapon-Type {lightgreen}{2} {default}has been unrestricted."
 		"jp"		"{green}{1} {lightgreen}{2} {default}系統の武器は購入できるようになりました."
-		"zho"		"{green}{1} {default}武器種類 {lightgreen}{2} {default}解除限制使用."
-		"chi"		"{green}{1} {default}武器种类 {lightgreen}{2} {default}解除限制使用."
+		"zho"		"{green}{1} {default}武器種類 {lightgreen}{2} {default}已解除使用限制."
+		"chi"		"{green}{1} {default}武器种类 {lightgreen}{2} {default}已解除使用限制."
 		"ru"		"{green}{1} {default}Тип оружия {lightgreen}{2} {default}был разрешён."
 	}
 	"Weapon_Restrict"
@@ -66,8 +68,8 @@
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}Weapon-Type {lightgreen}All {default}has been restricted."
 		"jp"		"{green}{1} {lightgreen}全ての武器 {default}は購入できなくなりました."
-		"zho"		"{green}{1} {lightgreen}武器種類{default}全部限制使用."
-		"chi"		"{green}{1} {lightgreen}武器种类{default}全部限制使用."
+		"zho"		"{green}{1} {lightgreen}武器種類{default}全部被限制使用."
+		"chi"		"{green}{1} {lightgreen}武器种类{default}全部被限制使用."
 		"ru"		"{green}{1} {lightgreen}Всё {default}оружие было запрещенно."
 	}
 	"Weapontype_Unrestricted_all"
@@ -75,8 +77,8 @@
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}Weapon-Type {lightgreen}All {default}has been unrestricted."
 		"jp"		"{green}{1} {lightgreen}全ての武器 {default}は購入できるようになりました."
-		"zho"		"{green}{1} {lightgreen}武器種類{default}全部解除限制使用."	
-		"chi"		"{green}{1} {lightgreen}武器种类{default}全部解除限制使用."
+		"zho"		"{green}{1} {lightgreen}武器種類{default}全部解除使用限制."	
+		"chi"		"{green}{1} {lightgreen}武器种类{default}全部解除使用限制."
 		"ru"		"{green}{1} {lightgreen}Всё {default}оружие было запрещенно."
 	}
 	"buy_limit"
@@ -91,7 +93,7 @@
 	"buy_have"
 	{
 		"#format"	"{1:s}"
-		"en"		"{green}{1} {default}U Got."
+		"en"		"{green}{1} {default}You already got this weapon."
 		"jp"		"{green}{1} {default}既に所持しています."
 		"zho"		"{green}{1} {default}您已經擁有該武器."
 		"chi"		"{green}{1} {default}您已经拥有该武器."
@@ -156,8 +158,8 @@
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}You don't have enough cash to purchase this weapon."
 		"jp"		"{green}{1} {default}所持金が足りません."
-		"zho"		"{green}{1} {default}您目前的金額不足購買武器."
-		"chi"		"{green}{1} {default}您目前的金额不足购买武器."
+		"zho"		"{green}{1} {default}金額不足, 無法購買武器."
+		"chi"		"{green}{1} {default}金额不足, 无法购买武器."
 		"ru"		"{green}{1} {default}У вас недостаточно денег для покупки этого оружия."
 	}
 	"buy_weapon"
@@ -174,8 +176,8 @@
 		"#format"	"{1:s}{2:s}{3:i}"
 		"en"		"{green}{1} {default}You have purchased {lightgreen}{2}{default}. You can only purchase this item again {lightgreen}{3} {default}times."
 		"jp"		"{green}{1} {lightgreen}{2} {default}を購入しました (残り購入回数: {lightgreen}{3}{default})."
-		"zho"		"{green}{1} {default}您成功購買了 {lightgreen}{2}{default}，你還有 {lightgreen}{3} {default}購買次數."
-		"chi"		"{green}{1} {default}您成功购买了 {lightgreen}{2}{default}，你还有 {lightgreen}{3} {default}购买次数."
+		"zho"		"{green}{1} {default}您購買了 {lightgreen}{2}{default}，本回合你還能再購買 {lightgreen}{3} {default}次."
+		"chi"		"{green}{1} {default}您购买了 {lightgreen}{2}{default}，本回合你还能再购买 {lightgreen}{3} {default}次."
 		"ru"		"{green}{1} {default}Вы приобрели {lightgreen}{2}{default}. Осталось {lightgreen}{3} {default}."
 	}
 	"buy_cooldown"
@@ -190,37 +192,37 @@
 	"buy_weapon_price"
 	{
 		"#format"	"{1:s}{2:s}{3:i}"
-		"en"		"{green}{1} {default}You have purchased {lightgreen}{2} {default}for {lightgreen}{3}$ {default}because you re-purchase this weapon again."
-		"jp"		"{green}{1} {lightgreen}{2} {default}を購入しました.次回購入時 {lightgreen}{3} {default}に価格が上がります."
-		"zho"		"{green}{1} {default}你已經購買了 {lightgreen}{2} {default}價格為 {lightgreen}{3}元{default}，因重新購買價格會上升."
-		"chi"		"{green}{1} {default}你已经购买了 {lightgreen}{2} {default}价格为 {lightgreen}{3}元{default}，因重新购买价格会上升."
-		"ru"		"{green}{1} {default}Вы приобрели {lightgreen}{2} {default}за {lightgreen}{3}$ {default}, т.к. Вы уже имели это оружие."
+		"en"		"{green}{1} {default}You have purchased {lightgreen}{2} {default}for {lightgreen}${3} {default}because you re-purchase this weapon again."
+		"jp"		"{green}{1} {lightgreen}{2} {default}を購入しました.次回購入時 {lightgreen}${3} {default}に価格が上がります."
+		"zho"		"{green}{1} {default}由於本回合重複購買 {lightgreen}{2} {default}, 本次價格為 {lightgreen}${3}{default}."
+		"chi"		"{green}{1} {default}由于本回合重复购买 {lightgreen}{2} {default}, 本次价格为 {lightgreen}${3}{default}."
+		"ru"		"{green}{1} {default}Вы приобрели {lightgreen}{2} {default}за {lightgreen}${3} {default}, т.к. Вы уже имели это оружие."
 	}
 	"buy_weapon_mprice"
 	{
 		"#format"	"{1:s}{2:s}{3:0.2f}"
 		"en"		"{green}{1} {default}You have purchased {lightgreen}{2}{default}. Next time it will cost {lightgreen}{3}x {default}from original price to purchase."
 		"jp"		"{green}{1} {lightgreen}{2}{default}を購入しました.次回購入時元の価格から{lightgreen}{3}{default}に価格が上がります."
-		"zho"		"{green}{1} {default}您成功購買 {lightgreen}{2} {default}. 下一次武器的價格將為 {lightgreen}{3} 元."
-		"chi"		"{green}{1} {default}您成功购买 {lightgreen}{2} {default}. 下一次武器的价格将为 {lightgreen}{3} 元."
+		"zho"		"{green}{1} {default}您成功購買 {lightgreen}{2} {default}. 下一次武器的價格將為 {lightgreen}{3} 倍."
+		"chi"		"{green}{1} {default}您成功购买 {lightgreen}{2} {default}. 下一次武器的价格将为 {lightgreen}{3} 倍."
 		"ru"		"{green}{1} {default}Вы приобрели {lightgreen}{2}{default}. В следующий раз стоимость будет увеличена в {lightgreen}{3} {default}раза."
 	}
 	"buy_weapon_limit_price"
 	{
 		"#format"	"{1:s}{2:s}{3:i}{4:i}"
-		"en"		"{green}{1} {default}You have purchased {lightgreen}{2}{default} for {lightgreen}{3}$ {default}because you re-purchase this weapon again. And you only can purchase this item again {lightgreen}{4} {default}times."
-		"jp"		"{green}{1} {lightgreen}{2}{default}を購入しました (残り購入回数: {lightgreen}{4}{default}). 次回購入時 {lightgreen}{3}$ {default}に価格が上がります."
-		"zho"		"{green}{1} {default}您以 {lightgreen}{3} 元購買了武器 {lightgreen}{2} {default}您剩下 {lightgreen}{4} {default}購買次數."
-		"chi"		"{green}{1} {default}您以 {lightgreen}{3} 元购买了武器 {lightgreen}{2} {default}您剩下 {lightgreen}{4} {default}购买次数."
-		"ru"		"{green}{1} {default}Вы приобрели {lightgreen}{2}{default} за {lightgreen}{3}${default}, т.к. Вы уже имели это оружие. Вы можете приобрести это оружие ещё {lightgreen}{4} {default}раз."
+		"en"		"{green}{1} {default}You have purchased {lightgreen}{2}{default} for {lightgreen}${3} {default}because you re-purchase this weapon again. And you only can purchase this item again {lightgreen}{4} {default}times."
+		"jp"		"{green}{1} {lightgreen}{2}{default}を購入しました (残り購入回数: {lightgreen}{4}{default}). 次回購入時 {lightgreen}${3} {default}に価格が上がります."
+		"zho"		"{green}{1} {default}由於本回合重複購買 {lightgreen}{2} {default}, 本次價格為 {lightgreen}${3}{default}. 你還能再購買 {lightgreen}{3} {default}次."
+		"chi"		"{green}{1} {default}由于本回合重复购买 {lightgreen}{2} {default}, 本次价格为 {lightgreen}${3}{default}. 你还能再购买 {lightgreen}{3} {default}次."
+		"ru"		"{green}{1} {default}Вы приобрели {lightgreen}{2}{default} за {lightgreen}${3}{default}, т.к. Вы уже имели это оружие. Вы можете приобрести это оружие ещё {lightgreen}{4} {default}раз."
 	}
 	"buy_weapon_limit_mprice"
 	{
 		"#format"	"{1:s}{2:s}{3:0.2f}{4:i}"
 		"en"		"{green}{1} {default}You have purchased {lightgreen}{2}{default}. Next time it will cost {lightgreen}x{3} {default}from original price to purchase. And you only can purchase this item again {lightgreen}{4} {default}times."
 		"jp"		"{green}{1} {lightgreen}{2} {default}を購入しました (残り購入回数: {lightgreen}{4}{default}). 次回購入時元の価格から {lightgreen}x{3} {default}に価格が上がります."
-		"zho"		"{green}{1} {default}您已經成功購買 {lightgreen}{2} {default}，下一次該武器的價格將為 {lightgreen}x{3} 元{default}，您剩下 {lightgreen}{4} {default}購買次數."
-		"chi"		"{green}{1} {default}您已经成功购买 {lightgreen}{2} {default}，下一次该武器的价格将为 {lightgreen}x{3} 元{default}，您剩下 {lightgreen}{4} {default}购买次数."
+		"zho"		"{green}{1} {default}您已經成功購買 {lightgreen}{2} {default}，下一次該武器的價格將為 {lightgreen}x{3} 倍{default}，你還能再購買 {lightgreen}{3} {default}次."
+		"chi"		"{green}{1} {default}您已经成功购买 {lightgreen}{2} {default}，下一次该武器的价格将为 {lightgreen}x{3} 倍{default}，你还能再购买 {lightgreen}{3} {default}次."
 		"ru"		"{green}{1} {default}Вы приобрели {lightgreen}{2}{default}. В следующий раз стоимость будет увеличена в {lightgreen}{3} {default}раза. Вы можете приобрести это оружие ещё {lightgreen}{4} {default}раз."
 
 	}
@@ -228,42 +230,56 @@
 	{
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}Updated current loadout, use rebuy option to purchase these loadout weapons."
+		"zho"		"{green}{1} {default}當前武器裝備已更新, 使用重新購買選項購買這些武器."
+		"chi"		"{green}{1} {default}当前武器装备已更新, 使用重新购买选项购买这些武器."
 		"ru"		"{green}{1} {default}Для покупки текущего снаряжения, используйте опцию {red}rebuy {default}, чтобы перезакупить оружия, выставленные в настройках."
 	}
 	"save_loadout_zombie"
 	{
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}You must be human to save your current loadout."
+		"zho"		"{green}{1} {default}你必須是人類才可以保存當前武器裝備."
+		"chi"		"{green}{1} {default}你必须是人类才可以保存当前武器装备."
 		"ru"		"{green}{1} {default}Вы должны быть человеком, чтобы сохранить текущие настройки."
 	}
 	"save_loadout_dead"
 	{
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}You must be alive to save your current loadout."
+		"zho"		"{green}{1} {default}你必須活著才可以保存當前武器裝備."
+		"chi"		"{green}{1} {default}你必须活着才可以保存当前武器装备."
 		"ru"		"{green}{1} {default}Вы должны быть живым, чтобы сохранить текущие настройки."
 	}
 	"buy_loadout"
 	{
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}You have purchased current loadout. Select weapon from {lightgreen}!zbuy{default}."
+		"zho"		"{green}{1} {default}你購買了當前武器裝備. 從 {lightgreen}!zbuy{default} 選擇武器."
+		"chi"		"{green}{1} {default}你购买了当前武器装备. 从 {lightgreen}!zbuy{default} 选择武器."	
 		"ru"		"{green}{1} {default}Вы приобрели оружие, выставленные в параметрах автозакупки. Используйте {lightgreen}!zbuy{default} для выбора."
 	}
 	"buy_loadout_dead"
 	{
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}You must be alive to purchase the loadout."
+		"zho"		"{green}{1} {default}你必須活著才可以購買保存的武器裝備."
+		"chi"		"{green}{1} {default}你必须活着才可以购买保存的武器装备."		
 		"ru"		"{green}{1} {default}Вы должны быть живым, чтобы приобрести оружие, выставленное в параметрах автозакупки."
 	}
 	"buy_loadout_zombie"
 	{
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}You must be human to purchase the loadout."
+		"zho"		"{green}{1} {default}你必須是人類才可以購買保存的武器裝備."
+		"chi"		"{green}{1} {default}你必须是人类才可以购买保存的武器装备."
 		"ru"		"{green}{1} {default}Вы должны быть человеком, чтобы приобрести оружие, выставленное в параметрах автозакупки."
 	}
 	"buy_loadout_buyzone"
 	{
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}You must be in the buyzone to purchase the loadout."
+		"zho"		"{green}{1} {default}你必須在購買區内才可以購買保存的武器裝備."
+		"chi"		"{green}{1} {default}你必须在购买区内才可以购买保存的武器装备."
 		"ru"		"{green}{1} {default}Вы должны находиться в зоне покупки, чтобы совершить это действие."
 	}
 	"rebuy_on"
@@ -271,8 +287,8 @@
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}You have {lightgreen}enabled{default} Auto-Rebuy, Next spawn you will purchase loadout weapon automatically."
 		"jp"		"{green}{1} {default}自動購入を {lightgreen}有効 {default}にしました. 次のスポーン時から購入されます."
-		"zho"		"{green}{1} {default}您已經{lightgreen}開啟{default}了自動重新購買，下一回合你會自動購買您保存的設定."
-		"chi"		"{green}{1} {default}您已经{lightgreen}开启{default}了自动重新购买，下一回合你会自动购买您保存的设定."
+		"zho"		"{green}{1} {default}您已經{lightgreen}啟用{default}了自動重新購買，下一回合你會自動購買您保存的設定."
+		"chi"		"{green}{1} {default}您已经{lightgreen}启用{default}了自动重新购买，下一回合你会自动购买您保存的设定."
 		"ru"		"{green}{1} {default}Вы {lightgreen}включили{default} опцию Auto-Rebuy. При следующем респавне Вы закупите оружие автоматически."
 	}
 	"rebuy_off"
@@ -280,8 +296,8 @@
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}You have {red}disabled{default} Auto-Rebuy, Next spawn you have to purchase weapon manually."
 		"jp"		"{green}{1} {default}自動購入を {red}無効 {default}にしました. 次のスポーン時から購入されません."
-		"zho"		"{green}{1} {default}您已經{red}關閉{default}了自動重新購買，下一回合您不會自動購買您保存的設定."
-		"chi"		"{green}{1} {default}您已经{red}关闭{default}了自动重新购买，下一回合您不会自动购买您保存的设定."
+		"zho"		"{green}{1} {default}您已經{red}禁用{default}了自動重新購買，下一回合您不會自動購買您保存的設定."
+		"chi"		"{green}{1} {default}您已经{red}禁用{default}了自动重新购买，下一回合您不会自动购买您保存的设定."
 		"ru"		"{green}{1} {default}Вы {red}выключили{default} опцию Auto-Rebuy. При следующем респавне закупка будет осуществляться вручную."
 	}
 	"buyzone_on"
@@ -289,8 +305,8 @@
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}Purchase weapon in Buyzone-only has been {lightgreen}enabled{default}."
 		"jp"		"{green}{1} {default}BuyZoneによる武器購入制限 {lightgreen}有効"
-		"zho"		"{green}{1} {default}僅限購買區域購買武器{lightgreen}開啟{default}."
-		"chi"		"{green}{1} {default}仅限购买区域购买武器{lightgreen}开启{default}."
+		"zho"		"{green}{1} {default}僅限購買區域購買武器{lightgreen}已啟用{default}."
+		"chi"		"{green}{1} {default}仅限购买区域购买武器{lightgreen}已启用{default}."
 		"ru"		"{green}{1} {default}Закупка оружия только в зонах закупки была {lightgreen}включена{default}."
 	}
 	"buyzone_off"
@@ -298,8 +314,8 @@
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}Purchase weapon in Buyzone-only has been {red}disabled{default}."
 		"jp"		"{green}{1} {default}BuyZoneによる武器購入制限 {red}無効"
-		"zho"		"{green}{1} {default}僅限購買區域購買武器{red}關閉{default}."
-		"chi"		"{green}{1} {default}仅限购买区域购买武器{red}关闭{default}."
+		"zho"		"{green}{1} {default}僅限購買區域購買武器{red}已禁用{default}."
+		"chi"		"{green}{1} {default}仅限购买区域购买武器{red}已禁用{default}."
 		"ru"		"{green}{1} {default}Закупка оружия только в зонах закупки была {red}выключена{default}."
 	}
 	"loadout_on"
@@ -307,6 +323,8 @@
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}Weapon Loadout has been {lightgreen}enabled{default}."
 		"jp"		"{green}{1} {default}武器のロードアウト{lightgreen}有効"
+		"zho"		"{green}{1} {default}保存的武器裝備{lightgreen}已啟用{default}."
+		"chi"		"{green}{1} {default}保存的武器装备{lightgreen}已启用{default}."
 		"ru"		"{green}{1} {default}Перезакупка оружия была {lightgreen}включена{default}."
 	}
 	"loadout_off"
@@ -314,14 +332,16 @@
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}Weapon Loadout has been {red}disabled{default}."
 		"jp"		"{green}{1} {default}武器のロードアウト{red}無効"
+		"zho"		"{green}{1} {default}保存的武器裝備{lightgreen}已禁用{default}."
+		"chi"		"{green}{1} {default}保存的武器装备{lightgreen}已禁用{default}."
 		"ru"		"{green}{1} {default}Перезакупка оружия была {lightgreen}выключена{default}."
 	}
 	"Title_Main"
 	{
 		"en"		"Main Menu"
 		"jp"		"メインメニュー"
-		"zho"		"主要菜單"
-		"chi"		"主要菜单"
+		"zho"		"主菜單"
+		"chi"		"主菜单"
 		"ru"		"Главное меню"
 	}
 	"Title_WeaponType"
@@ -329,7 +349,7 @@
 		"en"		"Weapon Type Menu"
 		"jp"		"武器種メニュー"
 		"zho" 		"武器種類介面"
-		"chi" 		"武器种类介面"
+		"chi" 		"武器种类界面"
 		"ru"		"Тип оружия"
 	}
 	"Title_Loadout"
@@ -337,7 +357,7 @@
 		"en"		"Loadout Menu"
 		"jp"		"装備メニュー"
 		"zho" 		"裝備設定介面"
-		"chi" 		"装备设定介面"
+		"chi" 		"装备设定界面"
 		"ru"		"Автозакупка"
 	}
 	"Title_LoadoutOption"
@@ -352,30 +372,40 @@
 	{
 		"en"		"Restrict Weapon Menu"
 		"jp"		"制限武器メニュー"
+		"zho"		"武器限制菜單"
+		"chi"		"武器限制菜单"
 		"ru"		"Запретить оружие"
 	}
 	"Title_Primary_r"
 	{
 		"en"		"Restrict Primary Weapons"
 		"jp"		"メインウェポンの制限"
+		"zho"		"限制主要武器"
+		"chi"		"限制主要武器"
 		"ru"		"Запретить основное оружие"
 	}
 	"Title_Secondary_r"
 	{
 		"en"		"Restrict Secondary Weapons"
 		"jp"		"サブウェポンの制限"
+		"zho"		"限制次要武器"
+		"chi"		"限制次要武器"
 		"ru"		"Запретить дополнительное оружие"
 	}
 	"Title_Grenade_r"
 	{
 		"en"		"Restrict Grenades"
 		"jp"		"サブウェポンの制限"
+		"zho"		"限制手雷"
+		"chi"		"限制手雷"
 		"ru"		"Запретить гранаты"
 	}
 	"Title_Setting"
 	{
 		"en"		"Settings Menu"
 		"jp"		"設定メニュー"
+		"zho"		"設置菜單"
+		"chi"		"设置菜单"
 		"ru"		"Настройки"
 	}
 	"Title_LoadoutEdit"
@@ -383,6 +413,8 @@
 		"#format"	"{1:s}{2:s}"
 		"en"		"{1} Edit {2} Loadout"
 		"jp"		"{1} {2}ロードアウトを編集"
+		"zho"		"{1} 編輯 {2} 裝載"
+		"chi"		"{1} 编辑 {2} 装载"
 		"ru"		"{1} Изменить {2} автозакупку"
 	}
 	"Menu_setting"
@@ -390,7 +422,7 @@
 		"en"		"Server Settings"
 		"jp"		"サーバー設定"
 		"zho"		"伺服器設定"
-		"chi"		"伺服器设定"
+		"chi"		"服务器设定"
 		"ru"		"Настройки сервера"
 	}
 	"Menu_buy"
@@ -421,6 +453,8 @@
 	{
 		"en"		"Primary Weapons"
 		"jp"		"メインウェポン"
+		"zho"		"主要武器"
+		"chi"		"主要武器"
 		"ru"		"Основное оружие"
 	}
 	"Menu_secondary"
@@ -435,6 +469,8 @@
 	{
 		"en"		"Secondary Weapons"
 		"jp"		"サブウェポン"
+		"zho"		"次要武器"
+		"chi"		"次要武器"
 		"ru"		"Дополнительное оружие"
 	}
 	"Menu_grenade"
@@ -449,30 +485,32 @@
 	{
 		"en"		"Grenades"
 		"jp"		"グレネード"
+		"zho"		"手榴彈"
+		"chi"		"手榴弹"
 		"ru"		"Гранаты"
 	}
 	"Menu_save_l"
 	{
 		"en"		"Save Current Loadout"
 		"jp"		"現在の装備を保存"
-		"zho"		"保存您現在的武器設定"
-		"chi"		"保存您现在的武器设定"
+		"zho"		"保存您現在的武器裝備"
+		"chi"		"保存您现在的武器装备"
 		"ru"		"Сохранить текущие настройки"
 	}
 	"Menu_edit_l"
 	{
 		"en"		"Edit Your Loadout"
 		"jp"		"装備を編集"
-		"zho"		"編輯您的武器設定"
-		"chi"		"编辑您的武器设定"
+		"zho"		"編輯您的武器裝備"
+		"chi"		"编辑您的武器装备"
 		"ru"		"Изменить автозакупку"
 	}
 	"Menu_buy_l"
 	{
 		"en"		"Buy Saved Loadout"
 		"jp"		"保存した装備を購入"
-		"zho"		"已保存您的武器設定"
-		"chi"		"已保存您的武器设定"
+		"zho"		"購買已保存的武器裝備"
+		"chi"		"购买已保存的武器装备"
 		"ru"		"Приобрести сохранённую автозакупку"
 	}
 	"Menu_rebuy_l"
@@ -495,17 +533,17 @@
 	{
 		"en"		"Disabled"
 		"jp"		"無効"
-		"zho"		"啟用"
-		"chi"		"启用"
+		"zho"		"禁用"
+		"chi"		"禁用"
 		"ru"		"Выключено"
 	}
 	"Menu_ammo"
 	{
-		"en"		"Replenish ammo in your hand - (500$)"
-		"jp"		"手に持っている武器の弾補充 - (500$)"
-		"zho"		"補充您手持的武器彈藥 - (500元)"
-		"chi"		"补充您手持的武器弹药 - (500元)"
-		"ru"		"Докупить бронежилет - (500$)"
+		"en"		"Replenish ammo in your hand - ($500)"
+		"jp"		"手に持っている武器の弾補充 - ($500)"
+		"zho"		"補充您手持的武器彈藥 - ($500元)"
+		"chi"		"补充您手持的武器弹药 - ($500元)"
+		"ru"		"Докупить бронежилет - ($500)"
 	}
 	"Menu_buyzone_s"
 	{
@@ -527,24 +565,32 @@
 	{
 		"en"		"Admin Only"
 		"jp"		"管理者のみ"
+		"zho"		"僅限管理員"
+		"chi"		"仅限管理员"		
 		"ru"		"Админ меню"
 	}
 	"Menu_select"
 	{
 		"en"		"Selected"
 		"jp"		"選択済み"
+		"zho"		"已選擇"
+		"chi"		"已选择"		
 		"ru"		"Выбрать"
 	}
 	"Menu_none"
 	{
 		"en"		"None"
 		"jp"		"なし"
+		"zho"		"無"
+		"chi"		"无"
 		"ru"		"Пусто"
 	}
 	"Menu_restrict"
 	{
 		"en"		"Restricted"
 		"jp"		"制限された"
+		"zho"		"受限制"
+		"chi"		"受限制"
 		"ru"		"Запрещенное"
 	}
 
@@ -552,6 +598,8 @@
 	{
 		"#format"	"{1:s}{2:s}"
 		"en"		"{green}{1} {default}Your loadout Weapon {green}\"{2}\"{default} is currently restricted, The weapon will be available for purchasing again once it's get unlocked."
+		"zho"		"{green}{1} {default}您保存的裝備武器 {green}\"{2}\"{default} 已被限制, 當武器解除限制後可再次購買."
+		"chi"		"{green}{1} {default}您保存的装备武器 {green}\"{2}\"{default} 已被限制, 当武器解除限制后可再次购买."
 	}
 
 	"Usage_GetSlot"
@@ -559,8 +607,8 @@
 		"#format"	"{1:s}"
 		"en"		"{green}{1} {default}Usage: sm_slot <weaponname> (for console)"
 		"jp"		"{green}{1} {default}使用法: sm_slot <weaponname>"
-		"zho"		"{green}{1} {default}如何使用: sm_slot <武器英文名稱> (控制台用)"
-		"chi"		"{green}{1} {default}如何使用: sm_slot <武器英文名称> (控制台用)"
+		"zho"		"{green}{1} {default}用法: sm_slot <武器英文名稱> (控制台用)"
+		"chi"		"{green}{1} {default}用法: sm_slot <武器英文名称> (控制台用)"
 		"ru"		"{green}{1} {default}Использование: sm_slot <название оружия> (консоль)"
 	}
 	"GetSlot_Result"
